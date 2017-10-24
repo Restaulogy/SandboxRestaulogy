@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/jquery.mobile.theme-1.4.5.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/homepage.js"></script>
+</head>
+<body>
+
+<div data-role="page" id="restology">
+ <div data-role="panel" id="myPanel" data-display="overlay"> 
+    <ul data-role="listview" data-icon="false">
+  <li data-rel="close"><a href="#">Restology</a></li>
+  <li><a href="#">My Rewards</a></li>
+  <li><a href="#">My Promotions</a></li>
+  <li style='display:none' id='logoutBtn'><a href="#">Logout</a></li>
+</ul>
+  </div> 
+  <div data-role="header">
+  <a href="#myPanel" class="ui-btn ui-icon-bars ui-btn-icon-notext ui-nodisc-icon"></a>
+    <h1>Restology</h1>
+  </div>
+
+  <div data-role="main" class="ui-content" id='rest-main'>
+    <ul data-role="listview" data-icon="false" id='restaurentList'>
+  
+</ul>
+  </div>
+
+  </div> 
+<div id="login-modal" class="modal">
+  
+  <form class="modal-content animate" >
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('login-modal').style.display='none'" class="close" title="Close Modal">&times;</span>
+     </div>
+
+    <div class="container">
+      <label><b>Email/Phone</b></label>
+      <input type="text" placeholder="Enter Email/Phone" name="uname" id='uname' required>
+<label id='errorText' style='display:none'></label>
+      <button type="button" class='ui-btn' id='btn_login'>Login</button>
+     <a href='#signupPage' class="ui-btn signBtn" onclick="document.getElementById('login-modal').style.display='none'">Join Now</a>
+    </div>
+
+    
+  </form>
+</div>
+
+<div data-role="page" id="signupPage">
+ 
+  <div data-role="header">
+      <h1>Register</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <form>
+	<div class="container">
+      <label><b>Phone <span class='required'>*</span></b></label>
+      <input type="tel" placeholder="Phone" id="phoneNumber" pattern="^\d{10}" required>
+	  
+	  <label><b>Email </b></label>
+      <input type="email" placeholder="Email" id="emailId" >
+      
+	  <label><b>First Name <span class='required'>*</span></b></label>
+      <input type="text" placeholder="First Name" id="fname" required>
+	  
+	 <label><b>Last Name <span class='required'>*</span></b></label>
+      <input type="text" placeholder="Last Name" id="lname" required>
+	  
+	  <label><b>DOB </b></label>
+      <input type="date" placeholder="Name" id="userDOB">
+	  
+	  <label><b>Anniversary date</b></label>
+      <input type="date" placeholder="Name" id="anniversaryDate">
+	  
+	  <button type="button" class='ui-btn' id='btn_SignUp'>SignUp</button>
+    </div>
+	</form>
+  </div>
+
+  </div> 
+</body>
+</html>

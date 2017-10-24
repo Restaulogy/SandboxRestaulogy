@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="css/jquery.mobile.theme-1.4.5.min.css">
+   <link rel="stylesheet" href="css/grid.css">
+   <link rel="stylesheet" href="css/new_index.css"> 
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <script src="js/jquery.mobile-1.4.5.min.js"></script>
+  <!-- <script type="text/javascript" src="js/jquery.ajax-cross-origin.min.js"></script>  -->
+    <script src="js/indexjqm.js"></script>
+    <script src="js/proDetails.js"></script>
+</head>
+<body>
+
+<div data-role="page" id="restologyPage">
+  <div data-role="header">
+  <h1>Restaulogy</h1>
+	<a href="#" class="ui-btn ui-icon-power logoutBtn ui-btn-right ui-btn-icon-notext"></a>
+	<div data-role="navbar">
+        <ul class="header_navbar_list">
+          <li><a href="#restologyPage" class="active-tab" id='btn-menu-rest' style='border-bottom:2px solid #fff !important'>Restaurants</a></li>
+          <li><a href="#MyRewardPage">My Rewards</a></li>
+          <li><a class='promoClass' href="#MyPromotionPage">My Promotions</a></li>
+        </ul>
+      </div>
+  </div>
+
+  <div data-role="main" class="ui-content" id='rest-main'>
+    <div class='col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-offset-2 col-lg-8'>
+      <ul data-role="listview" data-icon="false" data-inset="true" id='restaurentList' data-filter='true'></ul>
+    </div>
+  </div>
+</div>
+
+<div data-role="page" id="MyPromotionPage">
+  <div data-role="header">
+    <a href="#" class="ui-btn ui-icon-power logoutBtn ui-btn-right ui-btn-icon-notext"></a>
+    <h1>Restaulogy</h1>
+	<div data-role="navbar">
+        <ul class="header_navbar_list">
+          <li><a href="#restologyPage">Restaurants</a></li>
+          <li><a href="#MyRewardPage">My Rewards</a></li>
+          <li><a href="#" class="promoClass active-tab" style='border-bottom:2px solid #fff !important'>My Promotions</a></li>
+        </ul>
+      </div>
+  </div>
+  <div role="main" class="ui-content">
+    <div class='col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-offset-2 col-lg-8'>
+      <ul class='listing' data-role="listview" data-icon="false" data-inset="true" data-filter='true' id='promotionList'></ul>
+    </div>
+  </div>
+</div>
+
+<div data-role="page" id="MyRewardPage">
+  <div data-role="header">
+  <a href="#" class="ui-btn ui-icon-power logoutBtn ui-btn-right ui-btn-icon-notext"></a>
+    <h1>Restaulogy</h1>
+	<div data-role="navbar">
+        <ul class="header_navbar_list">
+          <li><a href="#restologyPage">Restaurants</a></li>
+          <li><a href="#" class="active-tab" style='border-bottom:2px solid #fff !important'>My Rewards</a></li>
+          <li><a class='promoClass' href="#MyPromotionPage" >My Promotions</a></li>
+        </ul>
+      </div>
+  </div>
+  <div role="main" class="ui-content">
+    <div class='col-xs-12 col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-offset-2 col-lg-8'>
+      <ul class='listing' data-role='listview' data-icon="false" data-inset="true" data-filter='true' id='rewardsList'>
+      </ul>
+    </div>
+  </div>
+</div>
+ 
+ 
+ <div data-role="dialog" id="signupPage" class='myDialog'>
+ 
+  <div data-role="header">
+      <h1>Register</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <form>
+	<div class="container">
+      <label><b>Phone <span class='required'>*</span></b></label>
+      <input type="tel" placeholder="Phone" id="phoneNumber" pattern="^\d{10}" required>
+	  
+	  <label><b>Email </b></label>
+      <input type="email" placeholder="Email" id="emailId" >
+      
+	  <label><b>First Name <span class='required'>*</span></b></label>
+      <input type="text" placeholder="First Name" id="fname" required>
+	  
+	 <label><b>Last Name <span class='required'>*</span></b></label>
+      <input type="text" placeholder="Last Name" id="lname" required>
+	  
+	  <label><b>DOB </b></label>
+      <input type="date" placeholder="Name" id="userDOB">
+	  
+	  <label><b>Anniversary date</b></label>
+      <input type="date" placeholder="Name" id="anniversaryDate">
+	  
+	  <input type="button" id='btn_signupuser' value='SignUp'>
+    </div>
+	</form>
+  </div>
+
+  </div> 
+  
+  
+  <div data-role="dialog" id="loginDialog" class='myDialog'>
+ 
+  <div data-role="header">
+      <h1>Login</h1>
+  </div>
+
+  <div data-role="main" class="ui-content">
+    <div class="form-group">
+						
+							<label for="email"><b>Email/Phone</b></label>
+							<input type="text" class="form-control" id="uname" required placeholder="Enter Email/Phone">
+					  </div>
+					 
+                       <label id='errorText' style='display:none'></label>
+					   <div class='ui-grid-a'>
+						<div class='ui-block-a'>
+						<input type="button" data-icon='power' id='btn_login' value='Login'>
+						</div>
+						<div class='ui-block-b'>
+                        <input type='button' data-icon='user' value="Join Now" id='naviageToSignupBtn'>
+						<div>
+					   </div>
+                         </div>
+						
+               </div>
+  </div>
+
+  </div>
+
+  <div data-role="dialog" id="promotionDetails" class="myDialog">
+    <div data-role="header">
+      <h1>Promotion Details</h1>
+    </div>
+    <div class="main" class="ui-content">
+      <div class='col-xs-12' id='proDetailsDiv'></div>
+    </div>
+  </div>
+</body>
+</html>
