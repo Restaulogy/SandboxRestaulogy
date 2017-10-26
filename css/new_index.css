@@ -33,6 +33,7 @@
 	font-size:1.5em !important;
 	/* padding-left:10pc; */
 	margin: 0 !important;
+	margin-left: 50px !important;
 	}
 	
 	.rest-item{
@@ -48,6 +49,7 @@ margin-top : 5px;
 		color:#e3e3e3;
 		    white-space:initial !important;	
 			font-size:0.9em !important;
+			margin-left: 50px !important;
 /* padding-left:10pc;} */
 }
 
@@ -79,8 +81,20 @@ margin-top : 5px;
 }
 #restaurentList>li,#rewardsList>li,#promotionList>li{
 	background-color : #aeaeae !important;
+	border-color: #000;
+	border-radius: 5px;
+	border-width:2px;
 	/* margin-bottom : 10px !important; */
 }
+
+#promotionList>li {
+	min-height: 9.625em !important;
+}
+
+#rewardsList li {
+	padding-bottom: 25px !important;
+}
+
 .listing li
 {
 	background:inherit !important;
@@ -133,6 +147,7 @@ margin-top : 5px;
 }
 .mypro_desc{
 	color:#ffff00;
+	margin-left: 4pc;
 }
 
 /* .mypro_desc span{ */
@@ -236,36 +251,52 @@ hr{
 .restaurent_image, .listing  li img {
 	/* width: 200px; */
 	/* max-height: 150px !important; */
-	margin-top:10px;
-	width:5em;
-	height:5em;
+	margin-top:15px;
+	width:8em;
+	height:8em !important;
 	margin-bottom:5px;
+	max-height: 8em !important;
+	margin-left: 10px;
 }
 
 .restaurent-button-main-div {
 	/* padding-left: 9.5pc; */
 	margin-top: 20px;
+	margin-left: 50px !important;
 }
 
 .pramotion_reward_main_div {
 	/* padding-left: 11pc; */
-	width: 97%;
+	width: 80%;
+	margin-left: 10%;
 }
 
 .pramotion_reward_single_div {
 	white-space: initial;
-	/* padding-left:4pc; */
+	 padding-left:4pc; 
 }
 
-/* .pramotion_reward_main_div ul li { */
-	/* min-height: 150px !important; */
-/* } */
+.pramotion_reward_main_div ul li {
+	min-height: 9.625em !important;
+	cursor: pointer;
+}
 .pramotion_reward_main_div ul li{
 	color : #fff !important;
+	border: 2px solid #000000 !important;
+	border-radius: 5px !important;
+}
+
+.pramotion_reward_main_div ul
+{
+	    margin: 0em -1em !important; 
 }
 .pramotion_reward_single_div_1
 {
 	/* padding: 2pc 10px; */
+}
+
+.pramotion_reward_single_div_2 {
+	padding-left: 4pc;
 }
 
 .pramotion_reward_main_div ul li img{
@@ -276,6 +307,21 @@ hr{
 	font-size: 18px !important;
 }
 
+.sublist-promotion {
+	margin-left: 4pc !important;
+    margin-top: 3pc !important;
+}
 
+.sublist-promotion li {
+	border: 2px solid #000000 !important;
+    border-radius: 5px !important;
+    min-height: 9.625em !important;
+}
 
+.sublist-promotion li p {
+	margin-left: 4pc !important;
+}
 
+.sublist-promotion h4 {
+	margin-left: 4pc !important;
+}

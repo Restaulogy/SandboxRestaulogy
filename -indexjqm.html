@@ -15,10 +15,9 @@
 
 <div data-role="page" id="restologyPage">
   <div data-role="header">
-   <span class="userName" style="display:inline;float:left;padding:10px;"></span>
-   <a href="#" class="ui-btn ui-icon-power logoutBtn ui-btn-right ui-btn-icon-notext"></a>
-   <h1>Restaulogy</h1>
-   <div data-role="navbar">
+  <h1>Restaulogy</h1>
+	<a href="#" class="ui-btn ui-icon-power logoutBtn ui-btn-right ui-btn-icon-notext"></a>
+	<div data-role="navbar">
         <ul class="header_navbar_list">
           <li><a href="#restologyPage" class="active-tab" id='btn-menu-rest' style='border-bottom:2px solid #fff !important'>Restaurants</a></li>
           <li><a href="#MyRewardPage">My Rewards</a></li>
@@ -36,10 +35,9 @@
 
 <div data-role="page" id="MyPromotionPage">
   <div data-role="header">
-    <span class="userName" style="display:inline;float:left;padding:10px;"></span>
     <a href="#" class="ui-btn ui-icon-power logoutBtn ui-btn-right ui-btn-icon-notext"></a>
     <h1>Restaulogy</h1>
-   <div data-role="navbar">
+	<div data-role="navbar">
         <ul class="header_navbar_list">
           <li><a href="#restologyPage">Restaurants</a></li>
           <li><a href="#MyRewardPage">My Rewards</a></li>
@@ -56,10 +54,9 @@
 
 <div data-role="page" id="MyRewardPage">
   <div data-role="header">
-   <span class="userName" style="display:inline;float:left;padding:10px;"></span>
   <a href="#" class="ui-btn ui-icon-power logoutBtn ui-btn-right ui-btn-icon-notext"></a>
     <h1>Restaulogy</h1>
-   <div data-role="navbar">
+	<div data-role="navbar">
         <ul class="header_navbar_list">
           <li><a href="#restologyPage">Restaurants</a></li>
           <li><a href="#" class="active-tab" style='border-bottom:2px solid #fff !important'>My Rewards</a></li>
@@ -84,28 +81,28 @@
 
   <div data-role="main" class="ui-content">
     <form>
-   <div class="container">
+	<div class="container">
       <label><b>Phone <span class='required'>*</span></b></label>
       <input type="tel" placeholder="Phone" id="phoneNumber" pattern="^\d{10}" required>
-     
-     <label><b>Email </b></label>
+	  
+	  <label><b>Email </b></label>
       <input type="email" placeholder="Email" id="emailId" >
       
-     <label><b>First Name <span class='required'>*</span></b></label>
+	  <label><b>First Name <span class='required'>*</span></b></label>
       <input type="text" placeholder="First Name" id="fname" required>
-     
-    <label><b>Last Name <span class='required'>*</span></b></label>
+	  
+	 <label><b>Last Name <span class='required'>*</span></b></label>
       <input type="text" placeholder="Last Name" id="lname" required>
-     
-     <label><b>DOB </b></label>
+	  
+	  <label><b>DOB </b></label>
       <input type="date" placeholder="Name" id="userDOB">
-     
-     <label><b>Anniversary date</b></label>
+	  
+	  <label><b>Anniversary date</b></label>
       <input type="date" placeholder="Name" id="anniversaryDate">
-     
-     <input type="button" id='btn_signupuser' value='SignUp'>
+	  
+	  <input type="button" id='btn_signupuser' value='SignUp'>
     </div>
-   </form>
+	</form>
   </div>
 
   </div> 
@@ -119,22 +116,22 @@
 
   <div data-role="main" class="ui-content">
     <div class="form-group">
-                  
-                     <label for="email"><b>Email/Phone</b></label>
-                     <input type="text" class="form-control" id="uname" required placeholder="Enter Email/Phone">
-                 </div>
-                
+						
+							<label for="email"><b>Email/Phone</b></label>
+							<input type="text" class="form-control" id="uname" required placeholder="Enter Email/Phone">
+					  </div>
+					 
                        <label id='errorText' style='display:none'></label>
-                  <div class='ui-grid-a'>
-                  <div class='ui-block-a'>
-                  <input type="button" data-icon='power' id='btn_login' value='Login'>
-                  </div>
-                  <div class='ui-block-b'>
+					   <div class='ui-grid-a'>
+						<div class='ui-block-a'>
+						<input type="button" data-icon='power' id='btn_login' value='Login'>
+						</div>
+						<div class='ui-block-b'>
                         <input type='button' data-icon='user' value="Join Now" id='naviageToSignupBtn'>
-                  <div>
-                  </div>
+						<div>
+					   </div>
                          </div>
-                  
+						
                </div>
   </div>
 
@@ -147,25 +144,6 @@
     <div class="main" class="ui-content">
       <div class='col-xs-12' id='proDetailsDiv'></div>
     </div>
-  </div>
-
-  <div data-role="dialog" id="shareTextFriend" class="myDialog">
-      <div data-role="header">
-         <h1>Email Friend</h1>
-      </div>
-      <div data-role="main" class="ui-content">
-         <div class="form-group">
-            <label for="email"><b>Friend Phone</b></label>
-            <input type="text" class="form-control" id="friendPhone" required placeholder="Phone No">
-        </div>
-        <label id='errorText' style='display:none'></label>
-        <div class='ui-grid-a'>
-            <div class='ui-block-a'>
-                  <!-- <input type="button" data-icon='power' id='send_text_friend' value='Send'> -->
-                  <button class='ui-btn ui-icon-navigation ui-btn-icon-left' id='send_text_friend'>Send</button>
-            </div>
-        </div>
-      </div>
   </div>
 </body>
 </html>
