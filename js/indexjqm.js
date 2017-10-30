@@ -16,51 +16,78 @@ $('#btn_login').click(function() {
 })
 
 function doLogin(username) {
-  var rest_id = sessionStorage.getItem('clickedRest') ? sessionStorage.getItem('clickedRest') : 1;
-  var url = 'http://restaulogy.com/restaurant_in/service/service_login.php?tag=login&email=' + username + '&table_id=&is_restaurant=' + rest_id;
-  $.ajax({
-    url: url,
-    type: 'GET',
-    success: function(result) {
-      $('.logoutBtn').show();
-      var responseData = JSON.parse(result);
-      if (responseData.success == 1) {
-        var registeredRest = localStorage.getItem('registeredRest');
-        if (registeredRest == undefined) {
-          registeredRest = [];
+  var rest_id = sessionStorage.getItem('clickedRest');
+  //console.log(rest_id);
+  if(rest_id) {
+    var url = 'http://restaulogy.com/restaurant_in/service/service_login.php?tag=login&email=' + username + '&table_id=&is_restaurant=' + rest_id;
+      $.ajax({
+      url: url,
+      type: 'GET',
+      success: function(result) {
+        $('.logoutBtn').show();
+        var responseData = JSON.parse(result);
+        if (responseData.success == 1) {
+          var registeredRest = localStorage.getItem('registeredRest');
+          if (registeredRest == undefined) {
+            registeredRest = [];
+          } else {
+            registeredRest = JSON.parse(registeredRest);
+          }
+          registeredRest.push(rest_id);
+          localStorage.setItem('registeredRest', JSON.stringify(registeredRest));
+          localStorage.setItem('userData', JSON.stringify(responseData.user));
+          localStorage.setItem('userNumber', username);
+          var clickedId = sessionStorage.getItem('clickedId');
+          var addingKey = sessionStorage.getItem('addingKey');
+          $('#loginDialog').dialog('close');
+          // var changeTo = sessionStorage.getItem('changeTo');
+          if (addingKey == 'promotion') {
+            addPromotion(clickedId);
+            //$.mobile.changePage("#restologyPage");
+            // bindPromotion(rest_id);
+          } else if (addingKey == 'rewards') {
+            //$.mobile.changePage("#restologyPage");
+            //bindRewards(rest_id);
+            addReward(clickedId);
+          } else if (addingKey != null && addingKey != '') {
+            location.href="#"+addingKey;
+            location.reload();
+          }
+          $('.userName').empty();
+          $('.userName').append(localStorage.getItem('userData').full_name);
         } else {
-          registeredRest = JSON.parse(registeredRest);
+          alert(responseData.message);
         }
-        registeredRest.push(rest_id);
-        localStorage.setItem('registeredRest', JSON.stringify(registeredRest));
-        localStorage.setItem('userData', JSON.stringify(responseData.user));
-        localStorage.setItem('userNumber', username);
-        var clickedId = sessionStorage.getItem('clickedId');
-        var addingKey = sessionStorage.getItem('addingKey');
-        $('#loginDialog').dialog('close');
-        // var changeTo = sessionStorage.getItem('changeTo');
-        if (addingKey == 'promotion') {
-          addPromotion(clickedId);
-          //$.mobile.changePage("#restologyPage");
-          // bindPromotion(rest_id);
-        } else if (addingKey == 'rewards') {
-          //$.mobile.changePage("#restologyPage");
-          //bindRewards(rest_id);
-          addReward(clickedId);
-        } else if (addingKey != null && addingKey != '') {
-          location.href="#"+addingKey;
-          location.reload();
-        }
-        $('.userName').empty();
-        $('.userName').append(localStorage.getItem('userData').full_name);
-      } else {
-        alert(responseData.message);
+      },
+      error: function(result) {
+        console.log(result);
       }
-    },
-    error: function(result) {
-      console.log(result);
-    }
-  })
+    })
+  } else {
+    console.log('Surajs');
+    var url = 'http://restaulogy.com/restaurant_in/service/service_login.php?tag=get_user_ids_by_phone&phone='+username;
+    $.ajax({
+      url: url,
+      type: 'GET',
+      success: function(result) {
+        $('.logoutBtn').show();
+        var responseData = JSON.parse(result);
+        if (responseData.success == 1) {
+          localStorage.setItem('userData', JSON.stringify(responseData.user_ids[Object.keys(responseData.user_ids)[0]]));
+          localStorage.setItem('userNumber', username);
+          $('#loginDialog').dialog('close');
+          // var changeTo = sessionStorage.getItem('changeTo');
+          $('.userName').empty();
+          $('.userName').append(localStorage.getItem('userData').full_name);
+        } else {
+          alert(responseData.message);
+        }
+      },
+      error: function(result) {
+        console.log(result);
+      }
+    })
+  }
 }
 
 $(document).on('click', '.logoutBtn', function(e){
@@ -165,12 +192,14 @@ function registerUser() {
     }
   })
 }
-$(document).on("pageinit", "#MyRewardPage", function() {
+$(document).on("pageshow", "#MyRewardPage", function() {
   //$.mobile.changePage("#loginDialog");
   var number = localStorage.getItem('userNumber');
   if (number == null || number == '') {
+    //console.log('Suraj1');
     sessionStorage.setItem('addingKey', 'MyRewardPage');
     $.mobile.changePage("#loginDialog");
+    $('#naviageToSignupBtnDiv').hide();
   } else {
     var rewardsFound = false;
     var userData = JSON.parse(localStorage.getItem('userData'));
@@ -184,22 +213,34 @@ $(document).on("pageinit", "#MyRewardPage", function() {
         if (responseData.success == 0) {
           if (responseData.hasOwnProperty("rest_rewards")) {
             var rest_rewards = responseData.rest_rewards;
+            var is_claim = 0;
             $("#rewardsList").empty();
             for (var i = 0; i < rest_rewards.length; i++) {
               rewardsFound = true;
               var rewardObj = rest_rewards[i];
               $('#rewardsList').append("<li><img class='restaurent_image' src='" + rewardObj.restaurant_info.restaurent_img_url + "' alt='"+rewardObj.restaurant_info.restaurent_name+"'><h2 class='rest-name'>" +rewardObj.restaurant_info.restaurent_name+ "</h2><p><div class='mypro_desc'> Avaible Points : <span>" + parseInt(rewardObj.reward.reward_bal_points) + "</span></div><div class='col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2' id='rewardDiv_" + i + "' style='color:#fff'></div></p></li>");
               var availableRewards = rewardObj.rewards_avail;
-              if (availableRewards.length != 0) {
-                for (var k = 0; k < availableRewards.length; k++) {
-                  var item = availableRewards[k];
-                  $('#rewardDiv_' + i).append('<div>' + item.prom_title + '</div><br>');
+                if (availableRewards.length != 0) {
+                  is_claim = 0;
+                  for (var k = 0; k < availableRewards.length; k++) {
+                    var item = availableRewards[k];
+                    if(item.can_claim > 0) {
+                      $('#rewardDiv_' + i).append('<div>' + item.prom_title + '</div><br>');
+                      is_claim = 1;
+                    }
+                  }
+                  console.log(is_claim);
+                  console.log(rewardObj.restaurant_info.restaurent_name);
+                  if(is_claim == 0) {
+                    if (rewardObj.next_reward_pt != '') {
+                      $('#rewardDiv_' + i).append(rewardObj.next_reward_pt);
+                    }
+                  }
+                } else {
+                  if (rewardObj.next_reward_pt != '') {
+                    $('#rewardDiv_' + i).append(rewardObj.next_reward_pt);
+                  }
                 }
-              } else {
-                if (rewardObj.next_reward_pt != '') {
-                  $('#rewardDiv_' + i).append(rewardObj.next_reward_pt + ' points needed to get the next promotion offer');
-                }
-              }
             }
             $("#rewardsList").listview("refresh");
           }
@@ -226,11 +267,12 @@ $(document).on("pageinit", "#MyRewardPage", function() {
   })
 
 });
-$(document).on("pageinit", "#MyPromotionPage", function() {
+$(document).on("pageshow", "#MyPromotionPage", function() {
   var number = localStorage.getItem('userNumber');
   if (number == null || number == '') {
     sessionStorage.setItem('addingKey', 'MyPromotionPage');
     $.mobile.changePage("#loginDialog");
+    $('#naviageToSignupBtnDiv').hide();
   } else {
     promotionFound = false;
     $('.promoClass').addClass("ui-btn-active")
@@ -242,7 +284,7 @@ $(document).on("pageinit", "#MyPromotionPage", function() {
       url: url,
       type: 'GET',
       success: function(result) {
-        //console.log(result);
+        console.log(result);
         var responseData = JSON.parse(result);
         if (responseData.success == 0) {
           if (responseData.hasOwnProperty("all_rest_promotions")) {
@@ -292,7 +334,7 @@ $(document).on("pageinit", "#MyPromotionPage", function() {
             $("#promotionList").listview("refresh");
           }
           if (!promotionFound) {
-            $('#promotionList').append('<li class="list-group-item">No Promotions</li>');
+            $('#promotionList').append('<li class="list-group-item no_promotion">No Promotions</li>');
           }
         }
       },
@@ -525,7 +567,7 @@ function bindPromotion(rest_id) {
         //console.log(response);
         if (response.success == 1) {
           if (response.prom_list.length == 0) {
-            $('#listing_' + rest_id).append('<li>No Promotions</li>');
+            $('#listing_' + rest_id).append('<li class="no_promotion">No Promotions</li>');
           }
           for (var i = 0; i < response.prom_list.length; i++) {
             var promoItem = response.prom_list[i];
@@ -597,11 +639,11 @@ function bindPromotion(rest_id) {
             }
           })
         } else {
-          $('#listing_' + rest_id).append('<li>No Promotions</li>');
+          $('#listing_' + rest_id).append('<li class="no_promotion">No Promotions</li>');
         }
       },
       error: function(result) {
-        $('#listing_' + rest_id).append('<li>No Promotions</li>');
+        $('#listing_' + rest_id).append('<li class="no_promotion">No Promotions</li>');
         $('#listing_' + rest_id).listview().listview("refresh");
       }
     });
@@ -623,8 +665,12 @@ function addPromotion(clickedId) {
       var response = JSON.parse(result);
       if (response.success == 1) {
         alert(response.message);
+        location.href = '#MyPromotionPage';
+        location.reload();
       } else {
         alert(response.message);
+        location.href = '#MyPromotionPage';
+        location.reload();
       }
     },
     error: function(result) {

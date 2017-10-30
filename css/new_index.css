@@ -93,6 +93,7 @@ margin-top : 5px;
 
 #rewardsList li {
 	padding-bottom: 25px !important;
+	min-height: 9.625em !important;
 }
 
 .listing li
@@ -282,8 +283,8 @@ hr{
 }
 .pramotion_reward_main_div ul li{
 	color : #fff !important;
-	border: 2px solid #000000 !important;
-	border-radius: 5px !important;
+	/*border: 2px solid #000000 !important;
+	border-radius: 5px !important;*/
 }
 
 .pramotion_reward_main_div ul
@@ -313,8 +314,8 @@ hr{
 }
 
 .sublist-promotion li {
-	border: 2px solid #000000 !important;
-    border-radius: 5px !important;
+	/*border: 2px solid #000000 !important;
+    border-radius: 5px !important;*/
     min-height: 9.625em !important;
 }
 
@@ -325,3 +326,149 @@ hr{
 .sublist-promotion h4 {
 	margin-left: 4pc !important;
 }
+
+.no_promotion {
+	margin-left: 2pc !important;
+}
+
+
+@media only screen and (min-device-width : 1024px) and (max-device-width : 1366px) {
+	.add_circle {
+		padding: 8px;
+		margin: 0;
+	}
+
+	#proDetailsDiv .ui-btn, .myDialog .ui-btn:not(.ui-btn-left), #restaurentList .ui-btn:not(.add_circle) {
+		padding: 9px 10px 9px 35px !important;
+	}
+
+	.restaurent-button-main-div {
+		margin-top: 0 !important;
+	}
+
+	.restaurent_image, .listing  li img {
+		margin-left:5px !important;
+	}
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1023px){
+	.add_circle {
+		padding: 8px;
+		margin: 0;
+	}
+
+	#proDetailsDiv .ui-btn, .myDialog .ui-btn:not(.ui-btn-left), #restaurentList .ui-btn:not(.add_circle) {
+		padding: 9px 10px 9px 35px !important;
+	}
+
+	.restaurent-button-main-div {
+		margin-top: 0 !important;
+	}
+
+	.restaurent_image, .listing  li img {
+		margin-left:5px !important;
+	}
+}
+
+@media all and (max-width:767px){
+	.restaurent_image, .listing  li img {
+		width: 5em;
+    	height: 5em !important;
+    	max-height: 5em !important;
+	}
+
+	.rest-name {
+		font-size: 1em !important;
+		margin-left: 5px !important;
+	}
+
+	.rest-address {
+		margin-left: 5px !important;
+		font-size: 12px !important;
+	}
+
+	.restaurent-button-main-div {
+		margin-top: 0px;
+    	margin-left: 5px !important;
+	}
+
+	.ui-btn-icon-left:after {
+		left: 0.25em !important;
+	}
+
+	#proDetailsDiv .ui-btn, .myDialog .ui-btn:not(.ui-btn-left), #restaurentList .ui-btn:not(.add_circle) {
+		font-size: 10px !important;
+    	padding: 5px 5px 5px 25px !important;
+	}
+
+	.header_navbar_list .ui-btn {
+		font-size: 14px !important;
+		padding: 10px 0;
+	}
+
+	.pramotion_reward_main_div {
+		margin-left: 5%;
+	}
+
+	.pramotion_reward_single_div {
+		padding-left: 0;
+	}
+
+	.pramotion_reward_main_div li img {
+		width: 4em !important;
+		height: 4em !important;
+		margin-left: 0 !important;
+	}
+
+	.pramotion_reward_main_div li {
+		padding-left: 4.5em !important;
+	}
+
+	.pramotion_reward_single_div_1 {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+
+	.add_circle {
+		padding: 5px;
+		font-size: 10px !important;
+	}
+
+	.pramotion_reward_main_div ul li {
+		min-height: 6.625em !important;
+	}
+
+	.pro_title, .mypro_title {
+		font-size: 12px !important;
+	}
+
+	.message {
+		font-size: 12px !important;
+	}
+
+	.pro_desc {
+		font-size: 12px !important;
+	}
+
+	.pramotion_reward_main_div .col-xs-3, .pramotion_reward_main_div .col-sm-2 ,.pramotion_reward_main_div .col-md-2, .pramotion_reward_main_div .col-lg-2 {
+		padding-left: 0 !important;
+		padding-right: 0 !important;
+	}
+
+	#rest-main {
+		padding: 0 !important;
+	}
+
+	#rest-main .col-xs-12 {
+		padding-left: 5px !important;
+		padding-right: 5px !important;
+	}
+
+	.pramotion_reward_main_div .no_promotion {
+		padding-left: 1em !important;
+		font-size: 12px;
+	}
+}
+
+
+
