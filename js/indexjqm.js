@@ -42,14 +42,18 @@ function doLogin(username) {
           $('#loginDialog').dialog('close');
           // var changeTo = sessionStorage.getItem('changeTo');
           if (addingKey == 'promotion') {
-            addPromotion(clickedId);
+            addPromotionLogin(clickedId);
             //$.mobile.changePage("#restologyPage");
             // bindPromotion(rest_id);
           } else if (addingKey == 'rewards') {
-            //$.mobile.changePage("#restologyPage");
+            //$.mobile.changePage("#MyRewardPage");
             //bindRewards(rest_id);
+            alert('Logged in Successfully');
             addReward(clickedId);
+            location.href = '#MyRewardPage';
+            //location.reload();
           } else if (addingKey != null && addingKey != '') {
+            alert('Logged in Successfully');
             location.href="#"+addingKey;
             location.reload();
           }
@@ -57,6 +61,7 @@ function doLogin(username) {
           $('.userName').append(localStorage.getItem('userData').full_name);
         } else {
           alert(responseData.message);
+          $('.logoutBtn').hide();
         }
       },
       error: function(result) {
@@ -64,7 +69,6 @@ function doLogin(username) {
       }
     })
   } else {
-    console.log('Surajs');
     var url = 'http://restaulogy.com/restaurant_in/service/service_login.php?tag=get_user_ids_by_phone&phone='+username;
     $.ajax({
       url: url,
@@ -73,6 +77,7 @@ function doLogin(username) {
         $('.logoutBtn').show();
         var responseData = JSON.parse(result);
         if (responseData.success == 1) {
+          alert('Logged in Successfully');
           localStorage.setItem('userData', JSON.stringify(responseData.user_ids[Object.keys(responseData.user_ids)[0]]));
           localStorage.setItem('userNumber', username);
           $('#loginDialog').dialog('close');
@@ -81,6 +86,7 @@ function doLogin(username) {
           $('.userName').append(localStorage.getItem('userData').full_name);
         } else {
           alert(responseData.message);
+          $('.logoutBtn').hide();
         }
       },
       error: function(result) {
@@ -171,12 +177,14 @@ function registerUser() {
         if (addingKey == 'promotion') {
           //$.mobile.changePage("#restologyPage");
           //bindPromotion(rest_id);
-          addPromotion(clickedId);
+          addPromotionSignUp(clickedId);
         } else if (addingKey == 'rewards') {
           //$.mobile.changePage("#restologyPage");
           //bindRewards(rest_id);
+          alert('Sign up successfully.');
           addReward(clickedId);
         } else if (addingKey != null && addingKey != '') {
+          alert('Sign up successfully.');
           location.href="#"+addingKey;
           //$.mobile.changePage("#" + addingKey);
         }
@@ -184,6 +192,7 @@ function registerUser() {
         $('.userName').append(JSON.parse(localStorage.getItem('userData')).full_name);
       } else {
         alert(responseData.message);
+        $('.logoutBtn').hide();
       }
     },
     error: function(result) {
@@ -196,7 +205,6 @@ $(document).on("pageshow", "#MyRewardPage", function() {
   //$.mobile.changePage("#loginDialog");
   var number = localStorage.getItem('userNumber');
   if (number == null || number == '') {
-    //console.log('Suraj1');
     sessionStorage.setItem('addingKey', 'MyRewardPage');
     $.mobile.changePage("#loginDialog");
     $('#naviageToSignupBtnDiv').hide();
@@ -211,36 +219,51 @@ $(document).on("pageshow", "#MyRewardPage", function() {
       success: function(result) {
         var responseData = JSON.parse(result);
         if (responseData.success == 0) {
-          if (responseData.hasOwnProperty("rest_rewards")) {
+            if (responseData.hasOwnProperty("rest_rewards")) {
             var rest_rewards = responseData.rest_rewards;
             var is_claim = 0;
             $("#rewardsList").empty();
             for (var i = 0; i < rest_rewards.length; i++) {
               rewardsFound = true;
               var rewardObj = rest_rewards[i];
-              $('#rewardsList').append("<li><img class='restaurent_image' src='" + rewardObj.restaurant_info.restaurent_img_url + "' alt='"+rewardObj.restaurant_info.restaurent_name+"'><h2 class='rest-name'>" +rewardObj.restaurant_info.restaurent_name+ "</h2><p><div class='mypro_desc'> Avaible Points : <span>" + parseInt(rewardObj.reward.reward_bal_points) + "</span></div><div class='col-xs-offset-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2' id='rewardDiv_" + i + "' style='color:#fff'></div></p></li>");
+              $('#rewardsList').append("<li><img class='restaurent_image' src='" + rewardObj.restaurant_info.restaurent_img_url + 
+                "' alt='"+rewardObj.restaurant_info.restaurent_name+"'><h2 class='rest-name'>" +rewardObj.restaurant_info.restaurent_name+ 
+                "</h2><p><div class='mypro_desc'> Available Points : <span>" + parseInt(rewardObj.overall_stat.balance_points) + 
+                "</span></div><div class='reward_points_information' id='rewardDiv_" + i + "' style='color:#fff'></div></p></li>");
               var availableRewards = rewardObj.rewards_avail;
-                if (availableRewards.length != 0) {
-                  is_claim = 0;
-                  for (var k = 0; k < availableRewards.length; k++) {
-                    var item = availableRewards[k];
-                    if(item.can_claim > 0) {
-                      $('#rewardDiv_' + i).append('<div>' + item.prom_title + '</div><br>');
-                      is_claim = 1;
+              if (availableRewards.length != 0) {
+                is_claim = 0;
+                var sub_reward_list = '';
+                var img_url = '';
+                for (var k = 0; k < availableRewards.length; k++) {
+                  var item = availableRewards[k];
+                  if(item.can_claim > 0) {
+                    //<ul id='resto_reward_list_"+rewardObj.restaurant_info.restaurent_id+"' class='listing ui-listview ui-listview-inset ui-corner-all ui-shadow sublist-promotion' data-role='listview' data-icon='false' data-inset='true' data-filter='true'></ul>
+                    img_url = '';
+                    if (item.img_ext != '0') {
+                        img_url = 'http://restaulogy.com/restaurant_in/modules/business_listing/promotion_images/' + item.rwd_coupon_id + '.' + item.img_ext;
+                    } else {
+                        img_url = 'http://restaulogy.com/restaurant_in/images/restaurant/'+rewardObj.restaurant_info.restaurent_id+'.'+item.restaurent_img;
                     }
-                  }
-                  console.log(is_claim);
-                  console.log(rewardObj.restaurant_info.restaurent_name);
-                  if(is_claim == 0) {
-                    if (rewardObj.next_reward_pt != '') {
-                      $('#rewardDiv_' + i).append(rewardObj.next_reward_pt);
-                    }
-                  }
-                } else {
-                  if (rewardObj.next_reward_pt != '') {
-                    $('#rewardDiv_' + i).append(rewardObj.next_reward_pt);
+                    sub_reward_list = sub_reward_list + '<li class="ui-li-static ui-body-inherit ui-li-has-thumb"><img src="'+img_url+'"><h4 class="promo-name">'+item.prom_title+ '</h4><p style="color:#fff;">'+item.comments+'</p></li>';
+                    is_claim = 1;
                   }
                 }
+
+                if(is_claim == 1) {
+                  $('#rewardDiv_' + i).append('<ul class="listing ui-listview ui-listview-inset ui-corner-all ui-shadow sublist-promotion" data-role="listview" data-icon="false" data-inset="true" data-filter="true">' + sub_reward_list + '</ul>');
+                }
+
+                if(is_claim == 0) {
+                  if (rewardObj.next_reward_pt != '') {
+                    $('#rewardDiv_' + i).append('<div class="no_claim">'+rewardObj.next_reward_pt+'</div>');
+                  }
+                }
+              } else {
+                if (rewardObj.next_reward_pt != '') {
+                  $('#rewardDiv_' + i).append('<div class="no_claim">'+rewardObj.next_reward_pt+'</div>');
+                }
+              }
             }
             $("#rewardsList").listview("refresh");
           }
@@ -251,6 +274,7 @@ $(document).on("pageshow", "#MyRewardPage", function() {
       }
     })
     $("#rewardsList").listview("refresh");
+    $("#rewardsList").show();
   }
   var userLoggedIn = localStorage.getItem('userNumber');
   if (userLoggedIn == null || userLoggedIn == '') {
@@ -260,11 +284,18 @@ $(document).on("pageshow", "#MyRewardPage", function() {
     $('.userName').empty();
     $('.userName').append(JSON.parse(localStorage.getItem('userData')).full_name);
   }
-
   $(document).on("click", ".ui-dialog-contain .ui-header a", function(e){
-      //console.log('click on close');
-      location.href = '';
+      console.log('click on close');
+      if (number == null || number == '') {
+        location.href = '';
+      }
   })
+
+  // if(sessionStorage.getItem('addingKey') == 'rewards') {
+  //     sessionStorage.setItem('addingKey',null);
+  //     location.href = '#MyRewardPage';
+  //     location.reload();
+  // }
 
 });
 $(document).on("pageshow", "#MyPromotionPage", function() {
@@ -284,10 +315,9 @@ $(document).on("pageshow", "#MyPromotionPage", function() {
       url: url,
       type: 'GET',
       success: function(result) {
-        console.log(result);
         var responseData = JSON.parse(result);
         if (responseData.success == 0) {
-          if (responseData.hasOwnProperty("all_rest_promotions")) {
+            if (responseData.hasOwnProperty("all_rest_promotions")) {
             var promotions_list = responseData.all_rest_promotions;
             $("#promotionList").empty();
             for (var i = 0; i < promotions_list.length; i++) {
@@ -297,7 +327,6 @@ $(document).on("pageshow", "#MyPromotionPage", function() {
                 var prom_list = '';
                 for (var j = 0; j < promotions.length; j++) {
                   if(promotions[j].hasOwnProperty("user_promotion")) {
-                    
                     var user_promotions = promotions[j].user_promotion;
                     for (var k = 0; k < user_promotions.length; k++) {
                       promotionFound = true;
@@ -315,16 +344,22 @@ $(document).on("pageshow", "#MyPromotionPage", function() {
                         imgage_url = rest_info.restaurent_img_url;
                         //$('#img_' + userPromObj.id).attr('src', rest_info.restaurent_img_url);
                       }
-                      prom_list = prom_list + "<li class='ui-li-static ui-body-inherit ui-li-has-thumb'><img class='restaurent_image' id='img_" + userPromObj.id + "' src="+imgage_url+" alt='"+userPromObj.simple_title+"'><h4 class='promo-name'>" +userPromObj.simple_title+ "</h4><p>"+message+"</p></li>";
+                      
+                      if(userPromObj.cupon_type == "refer_friend") {
+                        prom_list = prom_list + "<li class='ui-li-static ui-body-inherit ui-li-has-thumb'><img class='restaurent_image' id='img_" + userPromObj.id + "' src="+imgage_url+" alt='"+userPromObj.simple_title+"'><h4 class='promo-name'>" +userPromObj.simple_title+ "</h4><p>"+message+"</p><div class='ui-grid-a button-div-1'><div class='ui-block-a'><button class='shareFacebookMyPromo ui-btn' id='shareMyPromo_"+userPromObj.id+"'><a href='' target='_blank' class='ui-link'><img id='share_img' src='img/share.png' style=''></a></button></div></div></li>";
+                      } else {
+                        prom_list = prom_list + "<li class='ui-li-static ui-body-inherit ui-li-has-thumb'><img class='restaurent_image' id='img_" + userPromObj.id + "' src="+imgage_url+" alt='"+userPromObj.simple_title+"'><h4 class='promo-name'>" +userPromObj.simple_title+ "</h4><p>"+message+"</p><div class='ui-grid-a button-div-1'><div class='ui-block-a'><button class='shareFacebookMyPromo ui-btn' id='shareMyPromo_"+userPromObj.id+"'><a href='' target='_blank' class='ui-link'><img id='share_img' src='img/share.png' style=''></a></button></div><div class='ui-block-b'><button class='emailFriendMyPromo ui-btn' resturent_id='"+rest_info.restaurent_id+"' promotion_id='"+userPromObj.id+"'><img id='refer_img' src='img/refer.png' style=''></button></div></div></li>";
+                      }
+                      addMyPromoShareLink(rest_info.restaurent_id,userPromObj.id);
                     }
                   }
                 }
               }
 
-              if(prom_list != '') {
+              if(prom_list != '' && prom_list != undefined) {
                 $('#promotionList').append("<li><img class='restaurent_image' src='" +
             rest_info.restaurent_img_url + "' alt='" + rest_info.restaurent_name + "'><h2 class='rest-name'>" +
-            rest_info.restaurent_name + "</h2><p><ul class='listing ui-listview ui-listview-inset ui-corner-all ui-shadow sublist-promotion' data-role='listview' data-icon='false' data-inset='true' data-filter='true'>"+prom_list+"</ul></p>");
+            rest_info.restaurent_name + "</h2><p class='rest-address'>"+rest_info.restaurent_address+"</p><p><ul class='listing ui-listview ui-listview-inset ui-corner-all ui-shadow sublist-promotion' data-role='listview' data-icon='false' data-inset='true' data-filter='true'>"+prom_list+"</ul></p>");
               }
               prom_list = '';
             //$(".common-sublist-promotion").listview("refresh");
@@ -354,9 +389,25 @@ $(document).on("pageshow", "#MyPromotionPage", function() {
   }
 
   $(document).on("click", ".ui-dialog-contain .ui-header a", function(e){
-      //console.log('click on close');
-      location.href = '';
-  })
+      console.log('click on close');
+      if (number == null || number == '') {
+        location.href = '';
+      }
+  });
+
+  // if(sessionStorage.getItem('addingKey') == 'promotion') {
+  //     sessionStorage.setItem('addingKey',null);
+  //     location.href = '#MyPromotionPage';
+  //     location.reload();
+  // }
+
+  $(document).on('click','.emailFriendMyPromo', function(event){
+        var restor_id = $(this).attr('resturent_id');
+        var promo_id = $(this).attr('promotion_id');
+        sessionStorage.setItem('prev_rest',restor_id);
+        sessionStorage.setItem('promotionClickedId',promo_id);
+        $.mobile.changePage('#shareTextFriend');
+  });
 });
 
 $(document).on("pageinit", "#restologyPage", function() {
@@ -393,6 +444,18 @@ $(document).on("pageinit", "#restologyPage", function() {
     $('.userName').empty();
     $('.userName').append(JSON.parse(localStorage.getItem('userData')).full_name);
   }
+
+  $(document).on("click", ".ui-dialog-contain .ui-header a", function(e){
+      location.reload();
+  });
+
+  $(document).on('click','.emailFriendMyPromo', function(event){
+        var restor_id = $(this).attr('resturent_id');
+        var promo_id = $(this).attr('promotion_id');
+        sessionStorage.setItem('prev_rest',restor_id);
+        sessionStorage.setItem('promotionClickedId',promo_id);
+        $.mobile.changePage('#shareTextFriend');
+  });
 });
 
 function getRestarentsJsonP() {
@@ -419,6 +482,7 @@ function getRestarentsJsonP() {
         $('.listing').hide();
         $('.listing').empty();
         var rest_id = $(this).attr('id');
+        localStorage.setItem('needRefresh',true);
         bindPromotion(rest_id);
       })
       $('.rewardBtn').unbind('click');
@@ -426,6 +490,7 @@ function getRestarentsJsonP() {
         $('#list_div').hide();
         $('.listing').hide();
         var rest_id = $(this).attr('id');
+        localStorage.setItem('needRefresh',true);
         bindRewards(rest_id);
       })
     }
@@ -458,6 +523,7 @@ function getRestarents() {
           $('#list_div').hide();
           $('.listing').hide();
           $('.listing').empty();
+          localStorage.setItem('needRefresh',true);
           var rest_id = $(this).attr('id');
           var prev_rest = sessionStorage.getItem("prev_rest");
           if (prev_rest != rest_id) {
@@ -471,6 +537,7 @@ function getRestarents() {
         $('.rewardBtn').click(function() {
           $('#list_div').hide();
           $('.listing').hide();
+          localStorage.setItem('needRefresh',true);
           var rest_id = $(this).attr('id');
           var prev_rest = sessionStorage.getItem("prev_rest");
           if (prev_rest != rest_id) {
@@ -507,7 +574,6 @@ function bindRewards(rest_id) {
           }
           for (var i = 0; i < response.reward_list.length; i++) {
             var rewardItem = response.reward_list[i];
-            console.log(rewardItem);
             $('#listing_' + rest_id).append('<li id="restaurentList' + rewardItem.rwd_id + '"><img src="img/default.jpg" id="img_' + rewardItem.rwd_coupon_id + '"><div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 pramotion_reward_single_div"><div class="pro_title">' + rewardItem.prom_title + '</div><div class="pro_desc">' + rewardItem.comments + '</div></div><div class="col-xs-3 col-sm-2 col-md-2 col-lg-2"><button class="ui-btn ui-icon-plus ui-btn-icon-notext add_circle" id=' + rewardItem.rwd_id + '></button></div></li>');
             if (rewardItem.img_ext != '0') {
               $('#img_' + rewardItem.rwd_coupon_id).attr('src', 'http://restaulogy.com/restaurant_in/modules/business_listing/promotion_images/' + rewardItem.rwd_coupon_id + '.' + rewardItem.img_ext);
@@ -518,14 +584,24 @@ function bindRewards(rest_id) {
           $('.add_circle').unbind('click');
           $('.add_circle').click(function(event) {
             event.stopPropagation();
-            var usernumber = localStorage.getItem('userNumber');
-            if (usernumber == null || usernumber == '') {
               sessionStorage.setItem('addingKey', 'MyRewardPage');
-              $.mobile.changePage("#loginDialog");
-            } else {
-              location.href = '#MyRewardPage';
-              location.reload();
-            }
+              var registeredRest = localStorage.getItem('registeredRest');
+              var clickedId = $(this).attr('id');
+              if (registeredRest == undefined) {
+                registeredRest = [];
+              } else {
+                registeredRest = JSON.parse(registeredRest);
+              }
+              if(registeredRest.indexOf(rest_id) == -1){
+                sessionStorage.setItem('addingKey', 'rewards');
+                sessionStorage.setItem('clickedRest', rest_id);
+                sessionStorage.setItem('clickedId', clickedId);
+                $.mobile.changePage("#loginDialog");
+              } else {
+                addReward(clickedId);
+                location.href = '#MyRewardPage';
+                location.reload();
+              }
           })
         } else {
           $('#listing_' + rest_id).append('<li>No rewards</li>');
@@ -546,6 +622,8 @@ function bindRewards(rest_id) {
 }
 
 function addReward(clickedId) {
+  location.href="#MyRewardPage";
+  //location.reload();
   var userData = JSON.parse(localStorage.getItem('userData'));
   var userId = userData.id;
   var url = 'http://restaulogy.com/restaurant_in/service/service_login.php?tag=add_reward_pts&auth_id=' + userId + '&table_id=' + clickedId + '&chkin_points={reward_points}&chkin_amount={reward_amount}&cust_server_pin={Server_pin}&chkin_invoice={chkin_invoice} ';
@@ -578,15 +656,25 @@ function bindPromotion(rest_id) {
                 var startDate = getFormattedDate(user_promotion_item.start_date);
                 var endDate = getFormattedDate(user_promotion_item.end_date);
                 var message = "Valid till " + endDate;
-                $('#listing_' + rest_id).append('<li id="' + user_promotion_item.id + '"><img id="img_' + user_promotion_item.id + '" src="img/default.jpg"><div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 pramotion_reward_single_div"><div class="pro_title">' +
-                  user_promotion_item.title + '</div><div class="message">' + message + '</div></div><div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pramotion_reward_single_div_1"><button class="ui-btn ui-icon-plus ui-btn-icon-notext add_circle" id="' +
-                  user_promotion_item.id + '"></button></div></div></li>');
+                // $('#listing_' + rest_id).append('<li id="' + user_promotion_item.id + '"><img id="img_' + user_promotion_item.id + '" src="img/default.jpg"><div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 pramotion_reward_single_div"><div class="pro_title">' +
+                //   user_promotion_item.title + '</div><div class="message">' + message + '</div></div><div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pramotion_reward_single_div_1"><button class="ui-btn ui-icon-plus ui-btn-icon-notext add_circle" id="' +
+                //   user_promotion_item.id + '"></button></div><div class="ui-grid-a button-div"><div class="ui-block-a"><button class="shareFacebookMyPromo ui-btn" id="shareMyPromo_'+user_promotion_item.id+'"><a href="" target="_blank" class="ui-link"><img src="img/share.png" style="width:32px;height:32px !important;margin:0;"></a></button></div><div class="ui-block-b"><button class="emailFriendMyPromo ui-btn" resturent_id="'+rest_id+'" promotion_id="'+user_promotion_item.id+'"><img src="img/refer.png" style="width:32px;height:32px !important;margin:0;"></button></div></div></div></li>');
                 //<div class="pramotion_reward_single_div_2 col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="ui-grid-a"><div class="ui-block-a"><button class="ui-btn ui-icon-mail ui-btn-icon-left emailFrnd">Email a friend</button></div><div class="ui-block-b"><button class="ui-btn ui-icon-star ui-btn-icon-left shareBtn">Share</button></div></div></div>
+                if(user_promotion_item.cupon_type == "refer_friend") {
+                  $('#listing_' + rest_id).append('<li id="' + user_promotion_item.id + '"><img id="img_' + user_promotion_item.id + '" src="img/default.jpg"><div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 pramotion_reward_single_div"><div class="pro_title" id="' + user_promotion_item.id + '">' +
+                  user_promotion_item.title + '</div><div class="message">' + message + '</div></div><div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pramotion_reward_single_div_1"><button class="ui-btn ui-icon-plus ui-btn-icon-notext add_circle" id="' +
+                  user_promotion_item.id + '"></button></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="ui-grid-a button-div"><div class="ui-block-a"><button class="shareFacebookMyPromo ui-btn" id="shareMyPromo_'+user_promotion_item.id+'"><a href="" target="_blank" class="ui-link"><img id="share_img" src="img/share.png" style=""></a></button></div><div class="ui-block-b"><button class="emailFriendMyPromo ui-btn" resturent_id="'+rest_id+'" promotion_id="'+user_promotion_item.id+'"><img id="refer_img" src="img/refer.png" style=""></button></div></div></div></div></li>');
+                } else {
+                  $('#listing_' + rest_id).append('<li id="' + user_promotion_item.id + '"><img id="img_' + user_promotion_item.id + '" src="img/default.jpg"><div class="col-xs-9 col-sm-10 col-md-10 col-lg-10 pramotion_reward_single_div"><div class="pro_title" id="' + user_promotion_item.id + '">' +
+                  user_promotion_item.title + '</div><div class="message">' + message + '</div></div><div class="col-xs-3 col-sm-2 col-md-2 col-lg-2 pramotion_reward_single_div_1"><button class="ui-btn ui-icon-plus ui-btn-icon-notext add_circle" id="' +
+                  user_promotion_item.id + '"></button></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><div class="ui-grid-a button-div"><div class="ui-block-a"><button class="shareFacebookMyPromo ui-btn" id="shareMyPromo_'+user_promotion_item.id+'"><a href="" target="_blank" class="ui-link"><img id="share_img" src="img/share.png" style=""></a></button></div></div></div></div></li>');
+                }
                 if (user_promotion_item.img_ext != '0') {
                   $('#img_' + user_promotion_item.id).attr('src', 'http://restaulogy.com/restaurant_in/modules/business_listing/promotion_images/' + user_promotion_item.id + '.' + user_promotion_item.img_ext);
                 } else {
                   $('#img_' + user_promotion_item.id).attr('src', ''+promoItem.restaurant_logo+'');
                 }
+                addMyPromoShareLink(rest_id,user_promotion_item.id);
 				$('[type="button"]').button();
 				$('[type="button"]').click(function(e){
 					e.stopPropagation();
@@ -596,7 +684,7 @@ function bindPromotion(rest_id) {
           }
           $('#listing_' + rest_id).listview().listview("refresh");
           $('#listing_' + rest_id + ' li').unbind('click');
-          $('#listing_' + rest_id + ' li').click(function() {
+          $('#listing_' + rest_id + ' li .pro_title').click(function() {
             var clickedId = $(this).attr('id');
             sessionStorage.setItem('promotionClickedId', clickedId)
             var url = 'http://restaulogy.com/restaurant_in/service/service_promotion.php?tag=get_prom_det&prom_id='+clickedId+'&is_restaurant=1';
@@ -608,7 +696,7 @@ function bindPromotion(rest_id) {
                 if(result.success==1){
                   var prom_det = result.prom_det;
                   $('#proDetailsDiv').empty();
-                  $('#proDetailsDiv').append("<div class=''><div class='prom_det_title'>"+prom_det.title.toUpperCase()+"</div><div class='prom_det_date'>EXPIRES ON - "+getFormattedDate(prom_det.end_date)+"</div><hr><div class='prom_det_img'><img src="+prom_det.restaurant_logo+"></div><div class='prom_det_comment'>"+prom_det.comments+"</div><div class='ui-grid-a'><div class='ui-block-a'><button class='ui-btn ui-icon-star ui-btn-icon-left shareFacebook'><a href='' target='_blank'>Share</a></button></div><div class='ui-block-b'><button class='ui-btn ui-icon-mail ui-btn-icon-left emailFriend'>Share with friend</button></div></div></div>");
+                  $('#proDetailsDiv').append("<div class=''><div class='prom_det_title'>"+prom_det.title.toUpperCase()+"</div><div class='prom_det_date'>EXPIRES ON - "+getFormattedDate(prom_det.end_date)+"</div><hr><div class='prom_det_img'><img src="+prom_det.restaurant_logo+"></div><div class='prom_det_comment'>"+prom_det.comments+"</div><div class='ui-grid-a'><div class='ui-block-a'><button class='ui-btn shareFacebook'><a href='' target='_blank'><img id='share_img' src='img/share.png' style=''></a></button></div><div class='ui-block-b'><button class='ui-btn emailFriend'><img id='refer_img' src='img/refer.png' style=''></button></div></div></div>");
                 }
                 addFbLink();
                 //addShareFriendLink();
@@ -669,6 +757,58 @@ function addPromotion(clickedId) {
         location.reload();
       } else {
         alert(response.message);
+        location.href = '#MyPromotionPage';
+        location.reload();
+      }
+    },
+    error: function(result) {
+      console.log(result);
+    }
+  });
+}
+
+function addPromotionLogin(clickedId)
+{
+  var userData = JSON.parse(localStorage.getItem('userData'));
+  var userId = userData.id;
+  var url = 'http://restaulogy.com/restaurant_in/service/service_promotion.php?tag=add_to_favorite_prom&user_id=' + userId + '&prom_id=' + clickedId;
+  $.ajax({
+    url: url,
+    type: 'GET',
+    success: function(result) {
+      var response = JSON.parse(result);
+      if (response.success == 1) {
+        alert('Logged in successfully and ' + response.message);
+        location.href = '#MyPromotionPage';
+        location.reload();
+      } else {
+        alert('Logged in successfully and ' + response.message);
+        location.href = '#MyPromotionPage';
+        location.reload();
+      }
+    },
+    error: function(result) {
+      console.log(result);
+    }
+  });
+}
+
+function addPromotionSignUp(clickedId)
+{
+  var userData = JSON.parse(localStorage.getItem('userData'));
+  var userId = userData.id;
+  var url = 'http://restaulogy.com/restaurant_in/service/service_promotion.php?tag=add_to_favorite_prom&user_id=' + userId + '&prom_id=' + clickedId;
+  $.ajax({
+    url: url,
+    type: 'GET',
+    success: function(result) {
+      var response = JSON.parse(result);
+      if (response.success == 1) {
+        alert('Sign up successfully and ' + response.message);
+        location.href = '#MyPromotionPage';
+        location.reload();
+      } else {
+        alert('Sign up successfully and ' + response.message);
         location.href = '#MyPromotionPage';
         location.reload();
       }
@@ -743,6 +883,28 @@ function addFbLink()
       });
 }
 
+
+function addMyPromoShareLink(rest_id,promo_id)
+{
+  var url = 'http://restaulogy.com/restaurant_in/service/service_promotion.php?tag=get_fb_share&prom_id='+promo_id+'&is_restaurant='+rest_id;
+      $.ajax({
+        url: url,
+        type: 'GET',
+        success: function(result) {
+          var response = JSON.parse(result);
+          if (response.success == 1) {
+            //alert(response.message);
+            //window.open(response.fb_share_lnk, '_blank');
+            $('#shareMyPromo_'+promo_id+' a').attr('href',response.fb_share_lnk);
+          } else {
+            alert(response.message);
+          }
+        },
+        error: function(result) {
+          console.log(result);
+        }
+      });
+}
 
 
 
