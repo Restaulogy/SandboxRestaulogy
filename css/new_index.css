@@ -94,6 +94,8 @@ margin-top : 5px;
 	border-color: #000;
 	border-radius: 5px;
 	border-width:2px;
+	padding-bottom: 1px !important;
+	min-height: 10em !important;
 	/* margin-bottom : 10px !important; */
 }
 
@@ -151,6 +153,9 @@ margin-top : 5px;
 }
 .pro_title{
 	color:#006400;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 	text-shadow : none;
 }
 .pro_desc{
@@ -265,12 +270,17 @@ hr{
 	height:6em !important;
 }
 
+.pramotion_reward_main_div ul li img {
+	width:6em;
+	height:6em !important;
+}
+
 
 
 .restaurent_image, .listing  li img {
 	/* width: 200px; */
 	/* max-height: 150px !important; */
-	margin-top:15px;
+	margin-top:13px;
 	width:8em;
 	height:8em !important;
 	margin-bottom:5px;
@@ -278,10 +288,23 @@ hr{
 	margin-left: 10px;
 }
 
+.restaurent-button-main-div .ui-block-b {
+	margin-right: 10px;
+}
+
+.restaurent-button-main-div .ui-block-c {
+	width: 40%;
+}
+
+.restaurent-button-main-div .ui-block-a {
+	/*width: 22% !important;*/
+	margin-right: 10px;
+}
+
 .restaurent-button-main-div {
 	/* padding-left: 9.5pc; */
 	margin-top: 20px;
-	margin-left: 50px !important;
+	margin-left: 3pc !important;
 }
 
 .pramotion_reward_main_div {
@@ -292,11 +315,11 @@ hr{
 
 .pramotion_reward_single_div {
 	white-space: initial;
-	 padding-left:4pc; 
+	 padding-left:2pc; 
 }
 
 .pramotion_reward_main_div ul li {
-	min-height: 9.625em !important;
+	min-height: 7.625em !important;
 	cursor: pointer;
 }
 .pramotion_reward_main_div ul li{
@@ -326,9 +349,14 @@ hr{
 	font-size: 18px !important;
 }
 
+#rewardsList .sublist-promotion {
+	margin-top: 2pc !important;
+}
+
 .sublist-promotion {
 	margin-left: 3pc !important;
     margin-top: 3pc !important;
+    margin-bottom: 0 !important;
 }
 
 .sublist-promotion li {
@@ -338,13 +366,13 @@ hr{
 }
 
 .sublist-promotion li p {
-	margin-left: 4pc !important;
+	margin-left: 2pc !important;
 	font-size: 16px;
 	margin-bottom: 0 !important;
 }
 
 .sublist-promotion h4 {
-	margin-left: 4pc !important;
+	margin-left: 2pc !important;
 }
 
 .no_promotion {
@@ -353,9 +381,13 @@ hr{
 
 .promo-name {
 	color: #006400;
+	cursor: pointer;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.shareFacebookMyPromo,.emailFriendMyPromo {
+#proDetailsDiv .shareFacebook,#proDetailsDiv .emailFriend {
 	background: #aeaeae !important;
     border-radius: 6px !important;
     box-shadow: 2px 2px 2px #fff !important;
@@ -363,12 +395,28 @@ hr{
     padding: 5px;
 }
 
+#proDetailsDiv .ui-block-a {
+	margin-right: 10px;
+	/*width: 15%;*/
+}
+
+
+.shareFacebookMyPromo,.emailFriendMyPromo {
+	background: #aeaeae !important;
+    border-radius: 6px !important;
+    box-shadow: 2px 2px 2px #fff !important;
+    width: auto !important;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
 .button-div {
-	margin-left: 4pc;
+	margin-left: 2pc;
+	/*margin-top: -15px*/
 }
 
 .button-div-1 {
-	margin-left: 4pc;
+	margin-left: 2pc;
 }
 
 .button-div-1 #share_img, .button-div-1 #refer_img {
@@ -377,7 +425,8 @@ hr{
 }
 
 .button-div-1 .ui-block-a,.button-div .ui-block-a {
-	width: 15%;
+	/*width: 10%;*/
+	margin-right: 5px;
 }
 
 .sublist-promotion li {
@@ -396,22 +445,27 @@ hr{
     border-radius: 6px !important;
     box-shadow: 2px 2px 2px #fff !important;
     width: auto !important;
+    padding: 5px 15px 5px 30px;
+}
+
+#send_text_friend:after {
+	left: 0.3em !important;
 }
 
 #share_img {
-	width:32px;
-	height:32px !important;
+	width:24px;
+	height:24px !important;
 	margin:0;
 }
 
 #refer_img {
-	width:32px;
-	height:32px !important;
+	width:24px;
+	height:24px !important;
 	margin:0;
 }
 
 #promotionDetails .ui-header .ui-title {
-	float: inherit !important;
+	/*float: inherit !important;*/
 }
 
 #shareTextFriend .ui-header .ui-title {
@@ -445,6 +499,143 @@ hr{
 .no_claim {
 	margin-left: 4pc;
 	margin-top: 1pc;
+	margin-bottom: 1pc;
+	white-space: initial;
+	font-size: 14px;
+}
+
+#loginDialog .ui-btn-icon-left {
+	padding-left: 2.5em !important;
+}
+
+#loginDialog [class*=ui-block-]>.ui-btn {
+	margin-right: 7.3125em;
+    margin-left: 0.3125em;
+}
+
+.login_button_div {
+	width: 25%;
+	margin: auto;
+}
+
+.share-text-button {
+	width: 20%;
+    margin: auto;
+}
+
+.refer-friend-instruction {
+	font-size: 14px;
+	margin-bottom: 10px;
+}
+
+.refer-friend-instruction p {
+	margin: 0;
+	border: 1px solid #FF9600;
+	padding: 1px 5px;
+}
+
+.refer-header {
+	text-align: center;
+	margin-bottom: 10px;
+}
+
+p.refer-header-sub {
+	background: #FF9600;
+}
+
+
+#commonLoginSignup .ui-checkbox input {
+	left: 0.89em !important;
+	z-index: 10;
+}
+
+label#checkbox_signuplogin {
+    background: #000000 !important;
+    color: #fff;
+    font-size: 12px;
+    box-shadow: 0px 0px 0px #000 !important;
+    border: 0;
+    margin-left: 5px;
+}
+
+#commonLoginSignup .ui-input-btn {
+	width: 25%;
+	margin: auto;
+}
+
+#send_sign_login {
+	padding: 5px 10px 5px 35px !important;
+}
+
+#commonLoginSignup .ui-header .ui-title {
+	float: inherit !important;
+}
+
+.promo_code_resto {
+	text-align: center;
+    color: #ffff00;
+}
+
+.promo_det_add_promotion {
+	float: right;
+}
+
+#proDetailsDiv .add_circle_prom_det {
+	border-radius: 50% !important;
+    padding: 5px 20px;
+    margin: 0.5pc;
+    background: orange !important;
+    width: 0px !important;
+    box-shadow: 0px 0px 0px #fff !important;
+}
+
+.claim-promotion-button {
+	width: 25%;
+    margin: auto;
+}
+
+
+#claim_refre_friend {
+	background: #aeaeae !important;
+	padding-left: 1.5em !important;
+	border-radius: 10px;
+}
+
+#referFriendLink label b {
+	color: #fff;
+	font-size: 14px;
+}
+
+.rewardClaimBtn {
+	margin: 0;
+    width: 100px !important;
+    margin-left: 40px;
+    display: inherit;
+    background: #aeaeae !important;
+    border-radius: 6px !important;
+    box-shadow: 2px 2px 2px #fff !important;
+    padding: 5px 5px 5px 20px;
+}
+
+.menuBtn a {
+	color: #333 !important;
+	text-decoration: none !important;
+}
+
+.referFriendHeader {
+	color: orange;
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.diff_section {
+	border-width: 0.3px;
+}
+
+.prom_det_valid {
+	color: #fff;
+	text-align: center;
 }
 
 @media only screen and (min-device-width : 1024px) and (max-device-width : 1366px) {
@@ -475,11 +666,22 @@ hr{
 	}
 
 	.button-div-1 .ui-block-a,.button-div .ui-block-a {
-		width: 25%;
+		/*width: 25%;*/
+	}
+
+	.restaurent-button-main-div .ui-block-c {
+		width: 30%;
+	}
+
+	#referFriendForm.col-md-offset-2,#proDetailsDiv.col-md-offset-2,#referProDetailsDiv.col-md-offset-2{
+		margin-left: 33.666667% !important;
 	}
 }
 
 @media only screen and (min-device-width : 768px) and (max-device-width : 1023px){
+	#proDetailsDiv .add_circle_prom_det {
+		padding: 9px 10px 9px 10px !important;
+	}
 	.add_circle {
 		padding: 8px;
 		margin: 0;
@@ -512,7 +714,7 @@ hr{
 	}
 
 	.button-div .ui-block-a {
-		width: 42%;
+		/*width: 42%;*/
 	}
 
 	.button-div {
@@ -524,11 +726,19 @@ hr{
 	}
 
 	.button-div-1 .ui-block-a,.button-div .ui-block-a {
-		width: 25%;
+		/*width: 25%;*/
+	}
+
+	.restaurent-button-main-div .ui-block-c {
+		width: 30%;
 	}
 }
 
 @media all and (max-width:767px){
+	#proDetailsDiv .add_circle_prom_det {
+		padding: 10px 5px 10px 35px !important;
+	}
+
 	.shareFacebookMyPromo,.emailFriendMyPromo {
 		font-size: 9px !important;
     	padding: 5px 5px 5px 5px !important;
@@ -556,7 +766,7 @@ hr{
 
 	.restaurent-button-main-div {
 		margin-top: 0px;
-    	margin-left: 5px !important;
+    	margin-left: 0px !important;
 	}
 
 	.ui-btn-icon-left:after {
@@ -581,7 +791,7 @@ hr{
 		padding-left: 0;
 	}
 
-	.pramotion_reward_main_div li img {
+	.pramotion_reward_main_div ul li img {
 		width: 4em !important;
 		height: 4em !important;
 		margin-left: 0 !important;
@@ -637,7 +847,7 @@ hr{
 	}
 
 	.mypro_desc {
-		margin-left: 1pc;
+		margin-left: 5px;
 		font-size: 12px !important;
 	}
 
@@ -647,7 +857,7 @@ hr{
 	}
 
 	#rewardsList li {
-		padding-bottom: 5px !important;
+		padding-bottom: 0px !important;
 		min-height: 6.625em !important;
 		white-space: inherit !important;
 	}
@@ -697,6 +907,7 @@ hr{
 
 	.button-div {
     	margin-left: 0;
+    	margin-top: 0;
 	}
 
 	.button-div-1 {
@@ -708,7 +919,7 @@ hr{
 	}
 
 	.button-div .ui-block-a {
-		width: 40%;
+		/*width: 40%;*/
 	}
 
 
@@ -765,6 +976,45 @@ hr{
 	}
 
 	.button-div-1 .ui-block-a, .button-div .ui-block-a {
+		/*width: 30%;*/
+	}
+
+	.restaurent-button-main-div .ui-block-a {
+		/*width: 50% !important;*/
+	}
+
+	#restaurentList>li, #rewardsList>li, #promotionList>li {
+		min-height: 7.625em !important;
+		padding-bottom: 1px !important;
+		overflow: auto;
+	}
+
+	.restaurent-button-main-div .ui-block-c {
+		width: 15%;
+	}
+
+	.prom_det_title {
+		font-size: 14px;
+	}
+	.restaurent-button-main-div .ui-block-a,.restaurent-button-main-div .ui-block-b {
+		margin-right: 5px;
+	}
+
+	.rewardClaimBtn {
+		margin-left: 5px;
+		font-size: 12px;
+		width: 75px !important;
+	}
+
+	label#checkbox_signuplogin {
+		padding: 5px 0px 0px 40px;
+	}
+
+	#commonLoginSignup .ui-checkbox input {
+		left: 0.4em !important;
+	}
+
+	.claim-promotion-button {
 		width: 30%;
 	}
 }
